@@ -1,7 +1,7 @@
 /*
     Author:         kernelmustard
     Description:    Validate your anti-anti-debugging techniques against this binary
-    Status:         Active Development as of 4/21/2023
+    Status:         Active Development as of 5/4/2023
 */
 
 #[cfg(target_os = "linux")]
@@ -17,10 +17,6 @@ use windows_module::{
 };
 use windows::Win32::System::{
     Threading::Sleep,
-    Registry::{
-        RegCreateKeyW,
-        HKEY,
-    },
 };
 use std::{
     collections::HashMap,
@@ -51,9 +47,6 @@ fn main() {
     } else {
         return;
     }
-
-    // determine the release version of Windows
-    let release_ver: &str;  // fuck Windows for depreciating GetVersion()
     
     ///////////////////////////////////////////////////////////////////////////////////////////////
     indicator = "BeingDebugged flag";
@@ -70,6 +63,11 @@ fn main() {
 
     technique = "manually parsing PEB";
     detected = check_current_process_peb();
+    hm_techniques.insert(technique, detected);
+    info_statements(indicator, technique, detected);
+
+    technique = "executed within TLS Callback section";
+    detected = tls_callback_is_debugger_present();
     hm_techniques.insert(technique, detected);
     info_statements(indicator, technique, detected);
     ///////////////////////////////////////////////////////////////////////////////////////////////

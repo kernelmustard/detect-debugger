@@ -6,12 +6,6 @@ use windows::{
                 IsDebuggerPresent,
                 CheckRemoteDebuggerPresent,
             },
-            Registry::{
-                HKEY,
-                HKEY_LOCAL_MACHINE,
-                REG_SZ,
-                RegGetValueW,
-        },
             Threading::{
                 GetCurrentProcess,
                 PROCESS_BASIC_INFORMATION,
@@ -21,55 +15,45 @@ use windows::{
         },
         Foundation::{
             BOOL,
-//          HANDLE,
         },
     }
 };
 use std::{
     mem::size_of,
-    ffi::c_void
+    ffi::c_void,
+    process::{
+        Command,
+        Stdio,
+    },
+    io::{
+        BufReader,
+        BufRead,
+    },
 };
 
-pub fn get_release_version() {
+fn get_release_version() -> Option<String> {
 
-    RegGetValueW(
-        HKEY_LOCAL_MACHINE,
-        w!("SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion"),
-        w!("ProductName"),
-        0x0000ffff, // RRF_RT_ANY (no restriction on datatype)
-        NULL,
-          ,
-    );
-}
+    let command_output = Command::new("cmd")
+        .args(&["/C", "ver"])
+        .stdout(Stdio::piped())
+        .spawn()
+        .expect("Failed to execute command")
+        .stdout
+        .expect("Failed to capture command output");
 
-fn get_registry_value() -> Result<String, Error> {
-    
+    let reader = BufReader::new(command_output);
 
-    let 
-    let mut value: Vec<u16> = vec![0; 256];
-    let mut value_size = (value.len() * 2) as u32;
-    let mut value_type: u32 = 0;
+    for line in reader.lines() {
+        let line = line.expect("Failed to read line");
 
-    let result = unsafe {
-        RegGetValueW(
-            key.handle(),
-            None,
-            VALUE_NAME.encode_utf16().chain(Some(0)).collect::<Vec<_>>().as_ptr(),
-            REG_SZ,
-            &mut value_type as *mut u32,
-            value.as_mut_ptr() as *mut _,
-            &mut value_size as *mut u32,
-        )
-    };
-
-    if result == 0 {
-        // Success! Convert the retrieved value to a Rust String.
-        let value = String::from_utf16_lossy(&value[..(value_size as usize) / 2]);
-        Ok(value)
-    } else {
-        // An error occurred. Convert the Windows error code to a `windows::Error` and return it.
-        Err(Error::from_win32(result))
+        if line.contains("Microsoft Windows") {
+            let version = line.split('[').nth(1)?.split(']').nth(0)?;
+            return Some(version.to_string());
+        }
     }
+
+    None
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -110,6 +94,29 @@ pub fn check_current_process_peb() -> bool {
         false
     }
 }
+
+/*  You also access any of these debugging techniques in the TLS Callback function
+
+https://www.apriorit.com/dev-blog/367-anti-reverse-engineering-protection-techniques-to-use-before-releasing-software
+
+#[no_mangle]
+#[link_section = ".CRT$XLB"]
+pub static TLS_CALLBACK_FUNCTION: unsafe extern "system" fn() = {
+    extern "system" fn callback() {
+        let debugger_present = unsafe { IsDebuggerPresent() } != 0;
+
+        if debugger_present {
+            println!("Debugger is present!");
+
+            // Perform any action when a debugger is detected, e.g., terminate the process
+            // or stop debugging the current process
+            unsafe { DebugActiveProcessStop(0) };
+        }
+    }
+
+    callback
+};
+*/
 
 pub fn ntgf_in_current_process(is_x64: bool) -> bool {
 
@@ -209,7 +216,7 @@ pub fn heap_flags_in_current_process(is_x64: bool) -> bool {
             &mut peb_size,
         );
     };
-    let peb_base = unsafe { &peb.PebBaseAddress.as_ref().unwrap() };
+    let peb_base = unsafe { peb.PebBaseAddress.as_ref().unwrap() };
 
     let heap_flags_offset: i32;
 }
