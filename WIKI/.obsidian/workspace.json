@@ -1,0 +1,161 @@
+{
+  "main": {
+    "id": "d8af65812d72cbc6",
+    "type": "split",
+    "children": [
+      {
+        "id": "f27d9f7ed8f84f8b",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f999deb526578faa",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {}
+            }
+          },
+          {
+            "id": "6ff2edc0ad2a8df8",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.4.13"
+              }
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "f5ebf6fd18fa7fd2",
+    "type": "split",
+    "children": [
+      {
+        "id": "70c4375bd1ae454e",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "498473bcfbfacac6",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "783728a21d6714c6",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "af6e72258a349222",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "28c2c35916cc6801",
+    "type": "split",
+    "children": [
+      {
+        "id": "af2487603c0e455d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "fc2fcbcaf9635a1f",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "0ffa39dd2db311d9",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "1cb5b32dac573ac8",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "008396dcc884f34e",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "6ff2edc0ad2a8df8",
+  "lastOpenFiles": [
+    "Windows/Lazy List.md",
+    "Linux/Lazy List.md",
+    "Linux",
+    "PEB BeingDebugged Flag.md",
+    "Windows Techniques.md",
+    "Windows"
+  ]
+}

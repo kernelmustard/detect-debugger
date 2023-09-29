@@ -1,0 +1,9 @@
+- IsDebuggerPresent()
+- pPEB->BeingDebugged
+- IsDebuggerPresent() is TLS callback
+- CheckRemoteDebuggerPresent()
+- ZwQueryInformationProcess() ProcessDebugPort
+- ZwQueryInformationProcess() ProcessDebugFlags
+- ZwQueryInformationProcess() ProcessDebugHandle
+- RtlGetNtGlobalFlags() FLG_HEAP_ENABLE_TAIL_CHECK | FLG_HEAP_ENABLE_FREE_CHECK | FLG_HEAP_VALIDATE_PARAMETERS
+- \_Heap Flags and ForceFlags
