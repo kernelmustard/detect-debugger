@@ -19,6 +19,6 @@ endif()
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
     set(CMAKE_C_COMPILER musl-gcc)
-    add_custom_command(TARGET c_mify_c POST_BUILD COMMAND strip -R .comment ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME})
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND strip -R .comment ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME})
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND echo 'Ag==' | base64 -d | dd conv=notrunc of=${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME} bs=1 seek=5)
 endif()
