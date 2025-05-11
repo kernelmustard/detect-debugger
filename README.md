@@ -18,6 +18,7 @@ cmake ..; make
 ```
 #### Windows
 ```powershell
+
 # I am assuming default powershell with aliases
 chdir detect-debugger
 mkdir build
@@ -29,6 +30,8 @@ cmake ..; msbuild build/somefile # need to build on windows to get the actual na
 - [Geoff Chappell, Software Analyst (ask him about consulting!)](https://www.geoffchappell.com/index.htm)
 - [Checkpoint Anti-Debug Tricks](https://anti-debug.checkpoint.com/)
 - [Process Hacker documentation](https://processhacker.sourceforge.io/doc/index.html)
+- [GCC toolchain for windows x64](https://github.com/skeeto/w64devkit/releases)
+- After installing toolchain, rename sh.exe and create a symlink called sh.exe to bash.exe. Bourne Shell Sucks Balls and will give you an arcane syntax error
 ### Linux
 - [Hacker's Corner: Complete Guide to Anti-Debugging in Linux - Part 1 ](https://linuxsecurity.com/features/anti-debugging-for-noobs-part-1)
 - [CTF Wiki: Detecting Breakpoints Bypassing](https://ctf-wiki.mahaloz.re/reverse/linux/detect-bp/)

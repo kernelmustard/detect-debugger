@@ -1,6 +1,21 @@
+/**
+ * @file win.h
+ * @author kernelmustard (https://github.com/kernelmustard)
+ * @copyright GPLv3
+ * @brief header for windows anti-analysis
+ */
+
+#pragma once
+#ifndef WIN_H
+#define WIN_H
+
 // Windows headers
-#include <Windows.h>
+#include <windows.h>
 #include <winternl.h>
+#include <VersionHelpers.h>
+// C standard and Compiler headers
+#include <intrin.h>
+#include <stdbool.h>
 
 typedef ULONG(WINAPI *_RtlGetNtGlobalFlags)(VOID);
 
@@ -146,3 +161,96 @@ typedef struct _RTL_DEBUG_INFORMATION {
 typedef PRTL_DEBUG_INFORMATION(NTAPI *_RtlCreateQueryDebugBuffer)(ULONG, BOOLEAN);
 
 typedef NTSTATUS(NTAPI *_RtlQueryProcessHeapInformation)(PRTL_DEBUG_INFORMATION);
+
+/**
+ * @brief simple wrapper for IsDebuggerPresent() API
+ * @return bool rval
+ * @param void
+ */
+bool is_debugger_present(void);
+
+/**
+ * @brief check val of BeingDebugged flag in PEB
+ * @return bool rval
+ * @param void
+ */
+bool beingdebugged_flag_peb(void);
+
+/**
+ * @brief call IsDebuggerPresent() via TLS callback prior to main execution, set static value true if found
+ * @return void
+ * @param void
+ */
+//void WINAPI tlscb_is_debugger_present(void);
+
+/**
+ * @brief call CheckRemoteDebuggerPresent() on current process
+ * @return bool rval
+ * @param void
+ */
+bool check_remote_debugger_present(void);
+
+/**
+ * @brief call ZwQueryInformationProcess() on current process to see if ProcessDebugPort == -1
+ * @return bool rval
+ * @param void
+ */
+bool zwqueryinfoproc_processdebugport(void);
+
+/**
+ * @brief call ZwQueryProcessInformation() on current process to see if ProcessDebugFlags == 0
+ * @return bool rval
+ * @param void
+ */
+bool zwqueryinfoproc_processdebugflags(void);
+
+/**
+ * @brief call ZwQueryProcessInformation() on current process to see if ProcessDebugHandle != 0
+ * @return bool rval
+ * @param void
+ */
+bool zwqueryinfoproc_processdebugobjecthandle(void);
+
+/**
+ * @brief call RtlGetNtGlobalFlags() on current process to see if 3 flags are set in NtGlobalFlags section of PEB
+ * @return bool rval
+ * @param void
+ */
+bool ntgf_in_current_process(void);
+
+/**
+ * @brief call RtlQueryProcessHeapInformation() on current process to see if HEAP_GROWABLE flag is set
+ * @return bool rval
+ * @param void
+ */
+bool qprocheapinfo(void);
+
+/**
+ * @brief get PEB of current process, check flags and forceflags in heap struct for specific values depending on OS ver
+ * @return bool rval
+ * @param void
+ */
+bool heapstruct_flag_forceflags(void);
+
+/**
+ * @brief check if computer has <2 CPUs
+ * @return bool rval
+ * @param void
+ */
+bool vm_check_cpu(void);
+
+/**
+ * @brief check if computer has <2GB RAM
+ * @return bool rval
+ * @param void
+ */
+bool vm_check_ram(void);
+
+/**
+ * @brief check if computer has <100GB of storage
+ * @return bool rval
+ * @param void
+ */
+bool vm_check_storage(void);
+
+#endif

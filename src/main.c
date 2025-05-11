@@ -47,20 +47,32 @@ void windows_tests() {
         zwqueryinfoproc_processdebugflags()
     );
     log_console(
-        "ZwQueryInformationProcess() for ProcessDebugHandle\n", 
-        zwqueryinfoproc_processdebugobjecthandle()
+      "ZwQueryInformationProcess() for ProcessDebugHandle\n", 
+      zwqueryinfoproc_processdebugobjecthandle()
     );
     log_console(
-        "NtGlobalFlag bits in PEB\n", 
-        ntgf_in_current_process()
+      "NtGlobalFlag bits in PEB\n", 
+      ntgf_in_current_process()
     );
     log_console(
-        "RtlQueryProcessHeapInformation() for flags\n",
-        qprocheapinfo()
+      "RtlQueryProcessHeapInformation() for flags\n",
+      qprocheapinfo()
     );
     log_console(
-        "Flag and ForceFlags in _HEAP structure\n", 
-        heapstruct_flag_forceflags()
+      "Flag and ForceFlags in _HEAP structure\n", 
+      heapstruct_flag_forceflags()
+    );
+    log_console(
+      "VM check: < 2 CPUs\n",
+      vm_check_cpu()
+    );
+    log_console(
+      "VM check: < 2GB RAM\n",
+      vm_check_ram()
+    );
+    log_console(
+      "VM check: < 100GB storage\n",
+      vm_check_storage()
     );
 }
 #endif

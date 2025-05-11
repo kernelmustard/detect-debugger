@@ -1,9 +1,14 @@
-#include <Windows.h>
-#include <winternl.h>
-#include <stdbool.h>
+/**
+ * @file utils.c
+ * @author kernelmustard (https://github.com/kernelmustard)
+ * @copyright GPLv3
+ * @brief utility functions used by multiple anti-analysis techniques
+ */
+
+#include "utils.h"
 
 // determine whether process is WOW64
-bool is_wow64() {
+bool is_wow64(void) {
     bool rval = false;
 
     #if defined(_WIN64)
@@ -33,7 +38,7 @@ bool is_wow64() {
 }
 
 // return pointer to PEB of current process
-PPEB get_peb() {
+PPEB get_peb(void) {
     PPEB pPEB = NULL;
     HMODULE dll_handle = LoadLibrary("ntdll.dll");
     if (dll_handle) {
